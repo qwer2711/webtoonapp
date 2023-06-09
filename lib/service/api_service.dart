@@ -20,13 +20,24 @@ class ApiService {
     if (response.statusCode == 200) {
       //응답에서 성공하면 body실행하기 데이터 구조화 Map = webtoons
       final List<dynamic> webtoons = jsonDecode(response.body);
-      for (var webtoon in webtoons) {
-        //값: webtoons[webtoon]
-        //인스턴스 모델 가져오기
-        final instance = WebtoonModel.fromJson(webtoon);
-        //List에 추가
-        webtoonInstances.add(instance);
-      }
+
+      List.generate(
+        webtoons.length,
+        (index) => {
+          //List에 추가
+          webtoonInstances.add(WebtoonModel.fromJson(webtoons[index]))
+        },
+      );
+      webtoonInstances[0].title;
+      webtoonInstances[0].thumb;
+      webtoonInstances[0].id;
+      // for (var webtoon in webtoons) {
+      //   //값: webtoons[webtoon]
+      //   //인스턴스 모델 가져오기
+      //   final instance = WebtoonModel.fromJson(webtoon);
+      //   //List에 추가
+      //   webtoonInstances.add(instance);
+      // }
       return webtoonInstances;
     }
     throw Error();
